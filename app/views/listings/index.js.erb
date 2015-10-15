@@ -1,0 +1,5 @@
+jQuery(document).ready(function($) {
+    $("#listings-map").replaceWith('<div id="listings-map" class="col-xs-12"></div>');
+    $("#listing-list-section").replaceWith("<%= escape_javascript(render 'listing_list') %>");
+    initMap();
+});

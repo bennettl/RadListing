@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= full_title(yield(:title)) %></title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  <%= tag :meta, name: 'viewport', content: "width=device-width, initial-scale=1.0" %>
+</head>
+<body>
+    <div class="siteWrap">
+        <%= render 'layouts/header' %>
+        <!--  FLASH MESSAGES -->
+        <% flash.each do |key, value| %>
+            <%= content_tag :div, value, class:"alert alert-#{key}" %>
+        <% end %>
+        <% if flash.empty? %>
+          <div class="alert"></div>
+        <% end %>
+        <div class="container-fluid">
+            <%= yield %>
+        </div>
+        <%= render 'layouts/footer' %>
+    </div>
+</body>
+</html>

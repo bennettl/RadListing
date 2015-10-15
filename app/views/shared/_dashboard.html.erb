@@ -1,0 +1,11 @@
+<% # Use for index pages (i.e. users. lender application, reports) 
+# Returns a dashboard widget for index pages only viewable by admin %>
+<ul class="dashboard clearfix">
+	<% data.each do |key, value| %>
+		<li>
+            <span class="dashboard-stat-number"><%= number_to_human value %></span> 
+            <br />
+			<span class="dashboard"><%= key %></span>
+		</li>
+	<% end %>
+</ul>

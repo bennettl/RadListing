@@ -1,0 +1,7 @@
+<div class="indexList row">
+    <%= link_to listing do %>
+        <div class="col-sm-1 col-xs-2 cell"><%= listing.id %></div>
+        <div class="col-sm-5 cell"><%= listing.title %></div>
+        <div class="col-xs-5 cell"><%= number_to_currency(listing.price) %></div>
+    <% end %>
+</div>

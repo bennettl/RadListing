@@ -1,0 +1,25 @@
+<% provide(:title, 'Listings') %>
+<div class="box col-md-12 col-md-offset-0 col-sm-10 col-sm-offset-1">   
+    <div class="title">Listings</div>
+
+    <%= render 'shared/dashboard', { data: Listing.stats } %>
+    
+    <div id="listings-map" class="col-xs-12"></div>
+
+    <div class="indexList-header row">
+        <%= form_for listings_path, html: { id: 'listing-index-form' } do |f| %>
+            <%= hidden_field_tag 'sort[name]' %>
+            <%= hidden_field_tag 'sort[direction]' %>
+            <div class="col-sm-1 col-xs-2">
+                <%= render 'shared/index_headers/header_sortable', column_name: 'id', title: 'ID' %>
+            </div>
+            <div class="col-xs-5">
+                <%= render 'shared/index_headers/header_sortable', column_name: 'title', title: 'Title' %>
+            </div>
+            <div class="col-sm-5">
+                <%= render 'shared/index_headers/header_sortable', column_name: 'price', title: 'price' %>
+            </div>
+        <% end  %>
+    </div>
+    <%= render 'listing_list' %>
+</div>

@@ -1,0 +1,54 @@
+<div id="profile-edit" class="box col-xs-12 col-xs-offset-0 col-sm-offset-1 col-sm-10 clearfix"> 
+    <div class="title"><%= title %></div>
+    <%= form_for @user, html: { autocomplete: "off" } do |f| %>
+        <div class="orm-group col-xs-12">
+            <%= required_label :first_name, 'First Name' %>
+            <div class="col-sm-8 col-xs-12">
+                <%= f.text_field :first_name, class: 'form-input', placeholder: 'Bennett' %>
+            </div>
+        </div>
+        <div class="form-group col-xs-12">
+            <%= required_label :last_name, 'Last Name' %>
+            <div class="col-sm-8 col-xs-12">
+                <%= f.text_field :last_name, class: 'form-input', placeholder: 'Lee' %>
+            </div>
+        </div>
+        <div class="form-group col-xs-12">
+            <%= required_label :email, 'Email' %>
+            <div class="col-sm-8 col-xs-12">
+                <%= f.email_field :email, value: @user.email, class: 'form-input', placeholder: 'bennettlee@gmail.com' %>
+            </div>
+        </div>
+        <div class="form-group col-xs-12">
+            <% if @user.new_record? %>
+                <%= required_label :password, 'Password' %>
+            <% else %>
+                <%= f.label :password, 'Password', class: ' form-title col-sm-3 col-xs-12' %>
+            <% end %>
+            <div class="col-sm-8 col-xs-12">
+                <%= f.password_field :password, class: 'form-input' %>
+            </div>
+        </div>
+        <div class="form-group col-xs-12">
+            <% if @user.new_record? %>
+                <%= required_label :password_confirmation, 'Confirm Password' %>
+            <% else %>
+                <%= f.label :password_confirmation, 'Confirm Password', class: ' form-title col-sm-3 col-xs-12' %>
+            <% end %>
+            <div class="col-sm-8 col-xs-12">
+                <%= f.password_field :password_confirmation, class: 'form-input'  %>
+            </div>
+        </div>
+        <% if current_user.admin? %>
+            <div class="form-group col-xs-12">
+                <%= required_label :status, 'Status' %>
+                <div class="col-sm-8 col-xs-12">
+                    <%= f.select :u_status, options_for_select(User.u_statuses, @user[:u_status]), {} , {class: 'form-input'} %>
+                </div>
+            </div>
+        <% end %>
+        <div class="col-xs-12">
+            <%= f.submit "Update", id: 'update-user-button', class: 'button update slate', style: 'width: 100%; margin: 0;' %>
+        </div>
+    <% end %>
+</div>

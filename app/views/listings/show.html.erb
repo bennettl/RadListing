@@ -1,0 +1,147 @@
+<% provide(:title, "Listing #{@listing.id}") %>
+
+<div id="listing-show" class="box col-xs-12 col-xs-offset-0 col-sm-10 col-sm-offset-1 clearfix"> 
+    <%= link_to '&#8592; Back'.html_safe, 'javascript:history.back()', id: 'back-btn' %>
+    
+    <div class="title"><%= @listing.title %></div>
+
+    <div class="section-title">Basic Information</div>
+
+    <ul id="listing-profile" class="main-section clearfix">
+        <li class="clearfix col-xs-12 col-sm-6">
+            <div class="subtitle col-xs-12 col-sm-6">ID</div>
+            <div class="subvalue col-xs-12 col-sm-6"><%= @listing.provider_listing_id %></div>
+        </li>        
+        <li class="clearfix col-xs-12 col-sm-6">
+            <div class="subtitle col-xs-12 col-sm-6">Price</div>
+            <div class="subvalue col-xs-12 col-sm-6"><%= number_to_currency(@listing.price) %></div>
+        </li>
+        <li class="clearfix col-xs-12 col-sm-6">
+            <div class="subtitle col-xs-12 col-sm-6">Bedrooms</div>
+            <div class="subvalue col-xs-12 col-sm-6"><%= @listing.num_bedroom %></div>
+        </li>
+        <li class="clearfix col-xs-12 col-sm-6">
+            <div class="subtitle col-xs-12 col-sm-6">Source Url</div>
+            <div class="subvalue col-xs-12 col-sm-6"><%= link_to @listing.lp_url, @listing.lp_url, target: '_blank' %></div>
+        </li>
+        <li class="clearfix col-xs-12 col-sm-6">
+            <div class="subtitle col-xs-12 col-sm-6">Bathrooms</div>
+            <div class="subvalue col-xs-12 col-sm-6"><%= @listing.num_bathroom %></div>
+        </li>
+        <li class="clearfix col-xs-12 col-sm-6">
+            <div class="subtitle col-xs-12 col-sm-6">Created At</div>
+            <div class="subvalue col-xs-12 col-sm-6"><%= @listing.created_at.to_time.strftime('%B %e, %Y') unless @listing.created_at.nil?  %></div>
+        </li>
+
+        <li class="clearfix col-xs-12">
+            <div class="subtitle col-xs-12">Description</div>
+            <div class="subvalue col-xs-12"><%= @listing.description.html_safe %></div>
+        </li>
+    </ul>
+
+    <div class="section-title">Location</div>
+    
+    <ul id="listing-location" class="main-section clearfix col-sm-4 col-xs-12">
+        <li class="clearfix col-xs-12">
+            <div class="subtitle col-xs-12 col-sm-6">Street</div>
+            <div class="subvalue col-xs-12 col-sm-6"><%= @listing.street %></div>
+        </li>
+        <li class="clearfix col-xs-12">
+            <div class="subtitle col-xs-12 col-sm-6">City</div>
+            <div class="subvalue col-xs-12 col-sm-6"><%= @listing.city %></div>
+        </li>
+        <li class="clearfix col-xs-12">
+            <div class="subtitle col-xs-12 col-sm-6">State</div>
+            <div class="subvalue col-xs-12 col-sm-6"><%= @listing.state %></div>
+        </li>
+        <li class="clearfix col-xs-12">
+            <div class="subtitle col-xs-12 col-sm-6">Zip</div>
+            <div class="subvalue col-xs-12 col-sm-6"><%= @listing.zip %></div>
+        </li>
+        <li class="clearfix col-xs-12">
+            <div class="subtitle col-xs-12 col-sm-6">Longitude</div>
+            <div class="subvalue col-xs-12 col-sm-6"><%= @listing.longitude %></div>
+        </li>
+        <li class="clearfix col-xs-12">
+            <div class="subtitle col-xs-12 col-sm-6">Latitude</div>
+            <div class="subvalue col-xs-12 col-sm-6"><%= @listing.latitude %></div>
+        </li>
+    </ul>
+
+    <div id="listing-map" class="col-sm-8 col-xs-12"></div>
+
+    <div class="section-title">Landlord</div>
+    <ul id="listing-landlord" class="main-section clearfix">
+        <li class="clearfix col-xs-12 col-sm-6">
+            <div class="subtitle col-xs-12 col-sm-6">Name</div>
+            <div class="subvalue col-xs-12 col-sm-6"><%= @listing.landlord.name %></div>
+        </li>
+        <li class="clearfix col-xs-12 col-sm-6">
+            <div class="subtitle col-xs-12 col-sm-6">Email</div>
+            <div class="subvalue col-xs-12 col-sm-6"><%= @listing.landlord.email %></div>
+        </li>
+      
+        <li class="clearfix col-xs-12 col-sm-6">
+            <div class="subtitle col-xs-12 col-sm-6">Phone</div>
+            <div class="subvalue col-xs-12 col-sm-6"><%= @listing.landlord.phone %></div>
+        </li>
+    </ul>
+
+    <div class="section-title">Photos</div>
+    
+        <ul id="listing-photos">
+            <% @listing.photos.each do |p| %>
+                <li class="photo" on-finish-render>
+                        <img src="<%= p.url %>" class="photo-thumbnail" />
+                </li>
+            <% end %>
+        </ul>
+        <div id="thumbnail-box" class="clearfix">
+          <ul class="thumbs clearfix">
+                <% @listing.photos.each_with_index do |p, index| %>
+                <li>
+                    <a href="" data-att-slide="<%= index + 1 %>">
+                        <img src="<%= p.url %>" />
+                    </a>
+                </li>
+                <% end %>
+            </ul>
+        </div>
+
+    <div class="row">
+        <%= link_to 'Delete', @listing, method: :delete, class: 'button delete center'%>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    // Asynchronously Load the map API 
+    jQuery(function($) {
+        // Inject map JS library if it doesn't exist
+        if (document.getElementById('google-maps-script') == null){
+            var script  = document.createElement('script');
+            script.id   = "google-maps-script";
+            script.src  = "http://maps.googleapis.com/maps/api/js?sensor=false&callback=initMap";
+            document.body.appendChild(script);
+
+            // https://maps.googleapis.com/maps/api/js?key=AIzaSyBQBGkwjqBPTsV01eg3eig8-Om33XLzIm8&callback=initMap
+        }
+    });
+
+    function initMap() {
+      var myLatLng = {lat: <%= @listing.latitude %>, lng: <%= @listing.longitude %> };
+
+      var map = new google.maps.Map(document.getElementById('listing-map'), {
+        zoom: 17,
+        center: myLatLng
+      });
+
+
+      var marker = new google.maps.Marker({
+        position: myLatLng,
+        map: map,
+        title: 'Hello World!'
+      });
+    }
+</script>
