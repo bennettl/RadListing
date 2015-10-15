@@ -20,10 +20,7 @@
             <div class="subtitle col-xs-12 col-sm-6">Bedrooms</div>
             <div class="subvalue col-xs-12 col-sm-6"><%= @listing.num_bedroom %></div>
         </li>
-        <li class="clearfix col-xs-12 col-sm-6">
-            <div class="subtitle col-xs-12 col-sm-6">Source Url</div>
-            <div class="subvalue col-xs-12 col-sm-6"><%= link_to @listing.lp_url, @listing.lp_url, target: '_blank' %></div>
-        </li>
+
         <li class="clearfix col-xs-12 col-sm-6">
             <div class="subtitle col-xs-12 col-sm-6">Bathrooms</div>
             <div class="subvalue col-xs-12 col-sm-6"><%= @listing.num_bathroom %></div>
@@ -36,6 +33,10 @@
         <li class="clearfix col-xs-12">
             <div class="subtitle col-xs-12">Description</div>
             <div class="subvalue col-xs-12"><%= @listing.description.html_safe %></div>
+        </li>
+        <li class="clearfix col-xs-12" style="margin-top: 20px;">
+            <div class="subtitle col-xs-12 col-sm-3">Source Url</div>
+            <div class="subvalue col-xs-12 col-sm-6"><%= link_to @listing.lp_url, @listing.lp_url, target: '_blank' %></div>
         </li>
     </ul>
 
@@ -83,7 +84,7 @@
       
         <li class="clearfix col-xs-12 col-sm-6">
             <div class="subtitle col-xs-12 col-sm-6">Phone</div>
-            <div class="subvalue col-xs-12 col-sm-6"><%= @listing.landlord.phone %></div>
+            <div class="subvalue col-xs-12 col-sm-6"><%= number_to_phone(@listing.landlord.phone) %></div>
         </li>
     </ul>
 
@@ -108,9 +109,6 @@
             </ul>
         </div>
 
-    <div class="row">
-        <%= link_to 'Delete', @listing, method: :delete, class: 'button delete center'%>
-    </div>
 </div>
 
 
